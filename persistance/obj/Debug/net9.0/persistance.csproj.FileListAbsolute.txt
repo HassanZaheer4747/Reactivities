@@ -1,0 +1,15 @@
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\bin\Debug\net9.0\persistance.deps.json
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\bin\Debug\net9.0\persistance.dll
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\bin\Debug\net9.0\persistance.pdb
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\bin\Debug\net9.0\Domain.dll
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\bin\Debug\net9.0\Domain.pdb
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\obj\Debug\net9.0\persistance.csproj.AssemblyReference.cache
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\obj\Debug\net9.0\persistance.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\obj\Debug\net9.0\persistance.AssemblyInfoInputs.cache
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\obj\Debug\net9.0\persistance.AssemblyInfo.cs
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\obj\Debug\net9.0\persistance.csproj.CoreCompileInputs.cache
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\obj\Debug\net9.0\persista.3AB18312.Up2Date
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\obj\Debug\net9.0\persistance.dll
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\obj\Debug\net9.0\refint\persistance.dll
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\obj\Debug\net9.0\persistance.pdb
+C:\Users\HASSAN ZAHEER\Reactivities2\persistance\obj\Debug\net9.0\ref\persistance.dll
