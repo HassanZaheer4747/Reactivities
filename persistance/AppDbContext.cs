@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace persistance;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)                       //DbContext = EF Core’s base class that knows how to talk to the database.
 {
    public required DbSet<Activity> Activities { get; set; }
 }

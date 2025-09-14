@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")]       //controller is the base holder for the name of the controller
     [ApiController]
     public class BaseApiController : ControllerBase
     {
