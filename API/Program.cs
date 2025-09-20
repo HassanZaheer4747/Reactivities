@@ -9,10 +9,13 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddCors();  //to allow cross origin requests from the client application   ,,CORS = Cross-Origin Resource Sharing. By default, your browser blocks API calls if the frontend and backend run on different domains/ports.
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000", "https://localhost:3000"));
+
 app.MapControllers();
 
 // Resolve AppDbContext from DI container.
