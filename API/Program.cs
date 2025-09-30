@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using persistance;
+using MediatR;
+using Application.Activities.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,11 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddCors();  //to allow cross origin requests from the client application   ,,CORS = Cross-Origin Resource Sharing. By default, your browser blocks API calls if the frontend and backend run on different domains/ports.
+// MediatR registrations
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(GetActivityDetails).Assembly);
+});
 
 var app = builder.Build();
 
