@@ -24,6 +24,10 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Activity>> CreateActivity(Activity activity)
         {
+            if (string.IsNullOrEmpty(activity.Id))
+            {
+                activity.Id = System.Guid.NewGuid().ToString();
+            }
             Context.Activities.Add(activity);
             await Context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetActivityDetail), new { id = activity.Id }, activity);
@@ -35,14 +39,16 @@ namespace API.Controllers
             var existingActivity = await Context.Activities.FindAsync(id);
             if (existingActivity == null) return NotFound();
 
-            // Update only the fields you want
-            if (updatedActivity.Title != null)
-                existingActivity.Title = updatedActivity.Title;
-
-            if (updatedActivity.Description != null)
-                existingActivity.Description = updatedActivity.Description;
-
-            // … same for other fields you want to allow partial update
+            // Update all fields
+            existingActivity.Title = updatedActivity.Title;
+            existingActivity.Description = updatedActivity.Description;
+            existingActivity.Category = updatedActivity.Category;
+            existingActivity.Date = updatedActivity.Date;
+            existingActivity.IsCanceld = updatedActivity.IsCanceld;
+            existingActivity.City = updatedActivity.City;
+            existingActivity.Venue = updatedActivity.Venue;
+            existingActivity.Latitude = updatedActivity.Latitude;
+            existingActivity.Longitude = updatedActivity.Longitude;
 
             await Context.SaveChangesAsync();
             return NoContent();

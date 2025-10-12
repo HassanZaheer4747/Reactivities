@@ -11,25 +11,22 @@ type Props = {
     selectedActivity: Activity | undefined;
     openForm: (id?: string) => void;
     closeForm: () => void;
-    editMode: boolean;
-    submitForm: (activity:Activity) => void;   
-    deleteActivity: (id:string) => void;     
+    editMode: boolean;    
 }
 
-export default function ActivityDashbord({activities, cancelSelectActivity,selectActivity,selectedActivity,openForm,closeForm,editMode,submitForm,deleteActivity}: Props) {                    //Normally without destucturing it would be (props: Props) and then use props.activities
+export default function ActivityDashbord({activities, cancelSelectActivity,selectActivity,selectedActivity,openForm,closeForm,editMode}: Props) {                    //Normally without destucturing it would be (props: Props) and then use props.activities
     return (
         <Grid2 container spacing={3}>
             <Grid2 size={7}>
              <ActivityList
               activities={activities}
               selectActivity={selectActivity}
-              deleteActivity={deleteActivity}
               />
             </Grid2>
             <Grid2 size={5}>  
                 {selectedActivity  && !editMode &&
                 <ActivityDetails 
-                activity={selectedActivity}
+                selectedActivity={selectedActivity}
                 cancelSelectActivity={cancelSelectActivity}
                 openForm={openForm}
                 />
@@ -38,7 +35,7 @@ export default function ActivityDashbord({activities, cancelSelectActivity,selec
                 <ActivityForm 
                 closeForm={closeForm} 
                 activity={selectedActivity} 
-                submitForm={submitForm}  />}
+                 />}
             </Grid2>
             
         </Grid2>

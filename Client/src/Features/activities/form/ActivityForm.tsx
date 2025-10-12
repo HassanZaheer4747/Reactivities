@@ -1,16 +1,19 @@
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import type { FormEvent } from "react";
+import { useActivities } from "../../../lib/Hook/UseActivities";
 
 type Props = {
   closeForm: () => void;
   activity?: Activity ;
-  submitForm: (activity:Activity) => void;
 };
 
-export default function ActivityForm({closeForm,activity,submitForm}: Props) {
+export default function ActivityForm({closeForm,activity}: Props) {
+  const {updateActivity,createActivity} = useActivities();
 
-  const handleSubmit = (event:FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event:FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log('Form submitted!'); // Add this to see if form submission is triggered
+
    const formData = new FormData(event.currentTarget);    //new FormData(form) is a browser API → it reads all inputs with a name attribute from that form.
 // FormData is kind of weird, so you made it into a normal object:(by iterating through it and adding each key-value pair to a new object)
    const data:{[key:string] : FormDataEntryValue}={};
@@ -18,8 +21,16 @@ export default function ActivityForm({closeForm,activity,submitForm}: Props) {
        data[key] = value;
     })
 
-    if(activity) data.id=activity.id;   //if activity exists then we are editing an existing activity so we keep the id same otherwise for new activity id will be assigned in App.tsx
-    submitForm(data as unknown as Activity);   //type assertion to treat data as an Activity object
+    console.log('Activity object:', activity); // Check if activity exists
+    console.log('Form data collected:', data);
+
+    if(activity) {
+      await updateActivity.mutateAsync({...activity, ...data});
+    } else {
+      await createActivity.mutateAsync(data as unknown as Activity);
+    }
+    closeForm();
+    //type assertion to treat data as an Activity object
   }
 
  return (
@@ -32,13 +43,21 @@ export default function ActivityForm({closeForm,activity,submitForm}: Props) {
     <TextField name="title" label="Title" defaultValue={activity?.title} />
     <TextField name="description" label="Description" multiline rows={3} defaultValue={activity?.description} />
     <TextField name="category" label="Category" defaultValue={activity?.category}/>
-    <TextField name="date" label="Date" type="datetime" defaultValue={activity?.date} />
+    <TextField name="date" label="Date" type="datetime" defaultValue={activity?.date ?
+      new Date(activity.date).toISOString().split('T')[0] 
+      : new Date().toISOString().split('T')[0]
+    } />
     <TextField name="city" label="City" defaultValue={activity?.city} />
     <TextField name="venue" label="Venue" defaultValue={activity?.venue}/>
 
     <Box display="flex" justifyContent="end" gap={3}>
       <Button color="inherit"  onClick={closeForm} >Cancel</Button>   
-      <Button type="submit" color="success" variant="contained">Submit</Button>   
+      <Button
+       type="submit" 
+       color="success" 
+       variant="contained"
+       disabled={updateActivity.isPending || createActivity.isPending}   //disable the button while the mutation is in progress
+       >Submit</Button>   
     </Box>
   </Box>
 </Paper>

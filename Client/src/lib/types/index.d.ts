@@ -4,9 +4,9 @@ type Activity = {
     date: string
     description: string
     category: string
-    isCanceld: boolean
+    isCanceld?: boolean
     city: string
     venue: string
-    latitude: number
-    longitude: number
+    latitude?: number
+    longitude?: number
 }
