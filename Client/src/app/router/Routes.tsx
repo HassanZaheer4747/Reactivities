@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router";
 import App from "../layout/App";
 import ActivityDashbord from "../../Features/activities/Dashboard/ActivityDashbord";
 import ActivityForm from "../../Features/activities/form/ActivityForm";
-import ActivityDetail from "../../Features/activities/Details/ActivityDetail";
+import ActivityDetailPage from "../../Features/activities/Details/ActivityDetailPage";
 import HomePage from "../../Features/home/homePage";
 
 export const router = createBrowserRouter([{
@@ -11,7 +11,7 @@ export const router = createBrowserRouter([{
     children: [
         { path: '', element: <HomePage /> },   //localhost:3000/    ,That empty string ('') means: “When the URL matches exactly the parent path ( / ), render this component.”
         { path: 'activities', element: <ActivityDashbord /> },
-        { path: 'activities/:id', element: <ActivityDetail /> },
+        { path: 'activities/:id', element: <ActivityDetailPage /> },
         { path: 'createActivity', element: <ActivityForm /> },
         {path:'manage/:id', element:<ActivityForm/>}
     ]
