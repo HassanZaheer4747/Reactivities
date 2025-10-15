@@ -1,61 +1,19 @@
 
-import { Box, Container, CssBaseline, Typography } from "@mui/material";
-import { useState } from "react"
+import { Box, Container, CssBaseline } from "@mui/material";
 import NavBar from "./NavBar";
-import ActivityDashbord from "../../Features/activities/Dashboard/ActivityDashbord";
-import { useActivities } from "../../lib/Hook/UseActivities";
+import { Outlet } from "react-router";
+
 
 // import { Typography, List, ListItem } from "@mui/material"; 
 
 function App() {
-  const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);    //state for showing the details of selected activity
-  const [editMode, setEditMode] = useState(false);
-  const {activities, isLoading, }=useActivities();         //custom hook (work like fun to move some logic to somewhere else)
-
-  const handleSelectActivity = (id: string) => {
-    setSelectedActivity(activities!.find(x => x.id.toString() === id))                     //in js for equality check we use === unlike C# wehere we ==
-  }
-
-  const handleCanlcelSelectActivity = () => {
-    setSelectedActivity(undefined);
-  }
-
-  const handleOpenForm = (id?: string) => {     //will return the Activity Object if id passed exist and it is checked by HandleSelectActivity
-    if (id) {
-      handleSelectActivity(id);
-    }
-    else {
-      handleCanlcelSelectActivity();
-    }
-    setEditMode(true);
-  }
-
-  const handleCloseForm = () => {
-    setEditMode(false);
-  }
-
-
-
 
   return (
     <Box sx={{ bgcolor: '#eeeeee' ,minHeight:'100vh' }}>
       <CssBaseline />
-      <NavBar openForm={handleOpenForm} />
+      <NavBar/>
       <Container maxWidth='xl' sx={{ mt: 3 }}>
-        {!activities || isLoading ? (
-          <Typography>Loading..</Typography>
-        ) : (
-          <ActivityDashbord
-            activities={activities}
-            selectActivity={handleSelectActivity}
-            cancelSelectActivity={handleCanlcelSelectActivity}
-            selectedActivity={selectedActivity}
-            editMode={editMode}
-            openForm={handleOpenForm}
-            closeForm={handleCloseForm}
-          />
-        )}
-
+        <Outlet />      
       </Container>
     </Box>
   );

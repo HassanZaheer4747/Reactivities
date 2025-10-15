@@ -46,49 +46,7 @@ try{
     // Use a single logger for startup cleanup and seeding
     var logger = services.GetRequiredService<ILogger<Program>>();
 
-    // Remove any rows with empty Id using raw SQL to avoid PK modification issues
-    try
-    {
-        var deleted = await context.Database.ExecuteSqlRawAsync("DELETE FROM \"Activities\" WHERE \"Id\" = '';");
-        if (deleted > 0)
-        {
-            logger.LogInformation("Deleted {Count} Activities rows with empty Id.", deleted);
-        }
-    }
-    catch (Exception ex)
-    {
-        logger.LogWarning(ex, "Failed to run raw SQL cleanup for empty Ids.");
-    }
-
     await DbInitializer.SeedData(context);   //DbInitializer is static cause we dont need to create the instance to use its fun seedData
-
-    // Clean up any activities that have an empty or null Id (fix malformed seed or manual inserts)
-    var brokenActivities = context.Activities.Where(a => string.IsNullOrEmpty(a.Id)).ToList();
-    if (brokenActivities.Any())
-    {
-        // EF Core doesn't allow changing primary key values on tracked entities.
-        // Instead delete the broken rows and re-insert copies with new GUID ids.
-        var replacements = new List<Domain.Activity>();
-        foreach (var a in brokenActivities)
-        {
-            replacements.Add(new Domain.Activity {
-                Id = System.Guid.NewGuid().ToString(),
-                Title = a.Title,
-                Date = a.Date,
-                Description = a.Description,
-                Category = a.Category,
-                IsCanceld = a.IsCanceld,
-                City = a.City,
-                Venue = a.Venue,
-                Latitude = a.Latitude,
-                Longitude = a.Longitude
-            });
-            context.Activities.Remove(a);
-        }
-        context.Activities.AddRange(replacements);
-        await context.SaveChangesAsync();
-        logger.LogInformation("Replaced {Count} broken activities with new ids.", replacements.Count);
-    }
 }
 catch(Exception ex)
 {
